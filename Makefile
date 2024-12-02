@@ -7,7 +7,7 @@ TESTS ?= 1
 
 UNAME = $(shell sh -c 'uname -s 2>/dev/null || echo not')
 DESTDIR =
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 
 MAJOR = 1
 MINOR = 10
@@ -15,8 +15,8 @@ REVISION = 8
 LIB = libcli.so
 LIB_STATIC = libcli.a
 
-CC = gcc
-AR = ar
+CC ?= gcc
+AR ?= ar
 ARFLAGS = rcs
 DEBUG = -g
 OPTIM = -O3
