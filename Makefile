@@ -8,6 +8,7 @@ TESTS ?= 1
 UNAME = $(shell sh -c 'uname -s 2>/dev/null || echo not')
 DESTDIR =
 PREFIX ?= /usr/local
+BASELIB ?= lib
 
 MAJOR = 1
 MINOR = 10
@@ -64,14 +65,14 @@ clean:
 	rm -f *.o $(LIB)* $(LIB_STATIC) clitest libcli-$(MAJOR).$(MINOR).$(REVISION).tar.gz
 
 install: $(TARGET_LIBS)
-	install -d $(DESTDIR)$(PREFIX)/include $(DESTDIR)$(PREFIX)/lib
+	install -d $(DESTDIR)$(PREFIX)/include $(DESTDIR)$(PREFIX)/$(BASELIB)
 	install -m 0644 libcli.h $(DESTDIR)$(PREFIX)/include
   ifeq (1,$(STATIC_LIB))
-	install -m 0644 $(LIB_STATIC) $(DESTDIR)$(PREFIX)/lib
+	install -m 0644 $(LIB_STATIC) $(DESTDIR)$(PREFIX)/$(BASELIB)
   endif
   ifeq (1,$(DYNAMIC_LIB))
-	install -m 0755 $(LIB).$(MAJOR).$(MINOR).$(REVISION) $(DESTDIR)$(PREFIX)/lib
-	cd $(DESTDIR)$(PREFIX)/lib && \
+	install -m 0755 $(LIB).$(MAJOR).$(MINOR).$(REVISION) $(DESTDIR)$(PREFIX)/$(BASELIB)
+	cd $(DESTDIR)$(PREFIX)/$(BASELIB) && \
 	    ln -fs $(LIB).$(MAJOR).$(MINOR).$(REVISION) $(LIB).$(MAJOR).$(MINOR) && \
 	    ln -fs $(LIB).$(MAJOR).$(MINOR) $(LIB)
   endif
